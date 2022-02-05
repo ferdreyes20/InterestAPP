@@ -26,7 +26,6 @@ namespace Interest.API.Request
                     computations = r.Computations,
                 }).ToList();
 
-            
             return Ok(res);
         }
     }
