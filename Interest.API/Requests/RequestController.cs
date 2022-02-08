@@ -1,4 +1,6 @@
 ﻿using Interest.Application.Interfaces.Persistence;
+using Interest.Application.Requests.Queries.GetRequesList;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,19 +14,16 @@ namespace Interest.API.Request
     [Route("[Controller]")]
     public class RequestController : ControllerBase
     {
-        private readonly IRepository<Domain.Requests.Request> _repository;
-        public RequestController(IRepository<Domain.Requests.Request> repository)
+        private readonly IGetRequestListQuery _listQuery;
+        public RequestController(IGetRequestListQuery listQuery)
         {
-            _repository = repository;
+            _listQuery = listQuery;
         }
-        public IActionResult Index()
+
+        [HttpGet]
+        public IEnumerable<GetRequestListModel> Index()
         {
-            var res = _repository.All()
-                .Select(r => new
-                {
-                    id = r.Id,
-                    computations = r.Computations,
-                }).ToList();
+            var res = _listQuery.Execute();
 
             return Ok(res);
         }

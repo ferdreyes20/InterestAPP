@@ -1,4 +1,5 @@
 using Interest.Application.Interfaces.Persistence;
+using Interest.Application.Requests.Queries.GetRequesList;
 using Interest.Domain.Computations;
 using Interest.Persistence.Repositories;
 using Interest.Persistence.Shared;
@@ -32,11 +33,17 @@ namespace Interest.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<InterestDbContext>(opt => {
-                opt.UseSqlServer(Configuration.GetConnectionString("InterestAPP"));
+                opt.UseSqlServer(Configuration.GetConnectionString("InterestAPP"))
+                    .LogTo(
+                        Console.WriteLine,
+                        new[] { DbLoggerCategory.Database.Command.Name },
+                        LogLevel.Information);
             });
 
             services.AddTransient<InterestDbContext>();
             services.AddTransient<IRepository<Domain.Requests.Request>, RequestRepository>();
+            services.AddTransient<IGetRequestListQuery, GetRequestListQuery>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
