@@ -1,0 +1,33 @@
+﻿@model IEnumerable<RequestViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@foreach (var request in Model)
+{
+    <h2>Interest Request: @request.Id</h2>
+    <br />
+    <h4>Computations</h4>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Year</th>
+                <th scope="col">Value</th>
+                <th scope="col">Interest Rate</th>
+                <th scope="col">Future Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var computation in request.Computations)
+            {
+                <tr>
+                    <th scope="row">@computation.Year</th>
+                    <td>@computation.Value</td>
+                    <td>@computation.InterestRate</td>
+                    <td>@computation.FutureValue</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

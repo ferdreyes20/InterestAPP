@@ -69,8 +69,8 @@ namespace Interest.API
                     {
                         new Computation { Value = 1000, InterestRate = 0.10M, Year = 1, FutureValue = 1100},
                         new Computation { Value = 1100, InterestRate = 0.30M, Year = 2, FutureValue = 1430 },
-                        new Computation { Value = 1430, InterestRate = 0.10M, Year = 3, FutureValue = 2145 },
-                        new Computation { Value = 2145, InterestRate = 0.10M, Year = 4, FutureValue = 3217.5M }
+                        new Computation { Value = 1430, InterestRate = 0.50M, Year = 3, FutureValue = 2145 },
+                        new Computation { Value = 2145, InterestRate = 0.50M, Year = 4, FutureValue = 3217.5M }
                     }
                 };
 

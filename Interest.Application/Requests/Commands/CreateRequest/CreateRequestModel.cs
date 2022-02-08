@@ -8,6 +8,6 @@ namespace Interest.Application.Requests.Commands.CreateRequest
 {
     public class CreateRequestModel
     {
-        public int Value { get; set; }
+        public decimal Value { get; set; }
     }
 }
