@@ -43,7 +43,7 @@ namespace Interest.Application.Requests.Commands.CreateRequest
 
                     request.Computations.Add(computation);
 
-                    currentYear = currentYear++;
+                    currentYear = currentYear + 1;
                     currentValue = computation.FutureValue;
                     decimal newRate = currentInterestRate + increamentalRate;
                     if (newRate > upperBoundInterestRate)
