@@ -1,6 +1,6 @@
 # InterestAPP
 
-## Application that computes interest rate when given a value.
+## App description
 ###### This computes the future value based on the given current value entered when using the application.
 ###### this are the computation rules 
 ###### 1. Give a current value
