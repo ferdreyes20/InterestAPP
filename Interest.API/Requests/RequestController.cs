@@ -1,4 +1,5 @@
 ﻿using Interest.Application.Interfaces.Persistence;
+using Interest.Application.Requests.Commands.CreateRequest;
 using Interest.Application.Requests.Queries.GetRequesList;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,17 +16,26 @@ namespace Interest.API.Request
     public class RequestController : ControllerBase
     {
         private readonly IGetRequestListQuery _listQuery;
-        public RequestController(IGetRequestListQuery listQuery)
+        private readonly ICreateRequestCommand _createCommand;
+        public RequestController(IGetRequestListQuery listQuery,
+            ICreateRequestCommand createCommand)
         {
             _listQuery = listQuery;
+            _createCommand = createCommand;
         }
 
         [HttpGet]
         public IEnumerable<GetRequestListModel> Index()
         {
             var res = _listQuery.Execute();
+            return res;
+        }
 
-            return Ok(res);
+        [HttpPost]
+        public int CreateRequest(CreateRequestModel model)
+        {
+            var requestId = _createCommand.Execute(model.Value);
+            return requestId;
         }
     }
 }

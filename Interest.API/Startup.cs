@@ -1,4 +1,5 @@
 using Interest.Application.Interfaces.Persistence;
+using Interest.Application.Requests.Commands.CreateRequest;
 using Interest.Application.Requests.Queries.GetRequesList;
 using Interest.Domain.Computations;
 using Interest.Persistence.Repositories;
@@ -43,6 +44,7 @@ namespace Interest.API
             services.AddTransient<InterestDbContext>();
             services.AddTransient<IRepository<Domain.Requests.Request>, RequestRepository>();
             services.AddTransient<IGetRequestListQuery, GetRequestListQuery>();
+            services.AddTransient<ICreateRequestCommand, CreateRequestCommand>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
