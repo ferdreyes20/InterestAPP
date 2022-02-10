@@ -1,4 +1,5 @@
 ﻿using Interest.Presentation.Models;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,15 @@ namespace Interest.Presentation.Services
 {
     public class RequestService : IRequestService
     {
+        private readonly IConfiguration _configuration;
+        private string interestUri;
+
+        public RequestService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            interestUri =  _configuration.GetValue<string>("InterestUri");
+        }
+
         public async Task<int> AddRequest(decimal value)
         {
             try
@@ -20,7 +30,7 @@ namespace Interest.Presentation.Services
                 HttpResponseMessage httpResponse;
                 using (var httpClient = new HttpClient())
                 {
-                    httpResponse = await httpClient.PostAsync("http://localhost:5000/request", data);
+                    httpResponse = await httpClient.PostAsync(interestUri + "request", data);
                 }
                 var requestId = Convert.ToInt32(await httpResponse.Content.ReadAsStringAsync());
                 return requestId;
@@ -38,7 +48,7 @@ namespace Interest.Presentation.Services
                 HttpResponseMessage httpResponse;
                 using (var httpClient = new HttpClient())
                 {
-                    httpResponse = await httpClient.GetAsync("http://localhost:5000/request");
+                    httpResponse = await httpClient.GetAsync(interestUri + "request");
                 }
 
                 var response = await httpResponse.Content.ReadAsStringAsync();
