@@ -48,7 +48,7 @@ namespace Interest.Presentation.Services
                 HttpResponseMessage httpResponse;
                 using (var httpClient = new HttpClient())
                 {
-                    httpResponse = await httpClient.GetAsync(interestUri + "request/" + id);
+                    httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequest?id=" + id);
                 }
                 var response = await httpResponse.Content.ReadAsStringAsync();
                 var request = JsonConvert.DeserializeObject<RequestViewModel>(response);
@@ -67,7 +67,7 @@ namespace Interest.Presentation.Services
                 HttpResponseMessage httpResponse;
                 using (var httpClient = new HttpClient())
                 {
-                    httpResponse = await httpClient.GetAsync(interestUri + "request");
+                    httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequestList");
                 }
 
                 var response = await httpResponse.Content.ReadAsStringAsync();
