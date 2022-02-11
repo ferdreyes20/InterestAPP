@@ -8,7 +8,7 @@ namespace Interest.Presentation.Services
 {
     public interface IRequestService
     {
-        Task<List<RequestViewModel>> GetRequests();
+        Task<List<RequestViewModel>> GetRequestList();
         Task<int> AddRequest(decimal value);
     }
 }

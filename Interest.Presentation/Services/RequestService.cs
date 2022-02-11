@@ -41,7 +41,26 @@ namespace Interest.Presentation.Services
             }
         }
 
-        public async Task<List<RequestViewModel>> GetRequests()
+        public async Task<RequestViewModel> GetRequest(int id)
+        {
+            try
+            {
+                HttpResponseMessage httpResponse;
+                using (var httpClient = new HttpClient())
+                {
+                    httpResponse = await httpClient.GetAsync(interestUri + "request/" + id);
+                }
+                var response = await httpResponse.Content.ReadAsStringAsync();
+                var request = JsonConvert.DeserializeObject<RequestViewModel>(response);
+                return request;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<RequestViewModel>> GetRequestList()
         {
             try
             {

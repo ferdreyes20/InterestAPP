@@ -1,6 +1,7 @@
 ﻿using Interest.Application.Interfaces.Persistence;
 using Interest.Application.Requests.Commands.CreateRequest;
 using Interest.Application.Requests.Queries.GetRequesList;
+using Interest.Application.Requests.Queries.GetRequestDetail;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,19 +16,32 @@ namespace Interest.API.Request
     [Route("[Controller]")]
     public class RequestController : ControllerBase
     {
+        private readonly IGetRequestDetailQuery _detailQuery;
         private readonly IGetRequestListQuery _listQuery;
         private readonly ICreateRequestCommand _createCommand;
-        public RequestController(IGetRequestListQuery listQuery,
-            ICreateRequestCommand createCommand)
+
+        public RequestController (
+            IGetRequestDetailQuery detailQuery,
+            IGetRequestListQuery listQuery,
+            ICreateRequestCommand createCommand
+        )
         {
             _listQuery = listQuery;
             _createCommand = createCommand;
+            _detailQuery = detailQuery;
         }
 
-        [HttpGet]
-        public IEnumerable<GetRequestListModel> Index()
+        [HttpGet("GetRequestList")]
+        public IEnumerable<GetRequestListModel> GetRequestList()
         {
             var res = _listQuery.Execute();
+            return res;
+        }
+
+        [HttpGet("GetRequest")]
+        public GetRequestDetailModel GetRequest(int id)
+        {
+            var res = _detailQuery.Execute(id);
             return res;
         }
 

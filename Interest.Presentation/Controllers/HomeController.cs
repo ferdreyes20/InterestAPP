@@ -23,7 +23,7 @@ namespace Interest.Presentation.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var requests = await _requestService.GetRequests();
+            var requests = await _requestService.GetRequestList();
 
             return View(requests.OrderByDescending(r => r.Id));
         }
