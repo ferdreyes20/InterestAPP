@@ -60,13 +60,14 @@ namespace Interest.API
         public void CreateInitialDatabase()
         {
             using (var context = new InterestDbContext(SqlServerDbContextOptionsExtensions.UseSqlServer(new DbContextOptionsBuilder(), Configuration.GetConnectionString("InterestAPP")).Options))
-            {
+            { 
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
                 var computation = new List<Computation>();
                 var req = new Domain.Requests.Request()
                 {
+                    Value = 1000,
                     Computations = new List<Computation>
                     {
                         new Computation { Value = 1000, InterestRate = 0.10M, Year = 1, FutureValue = 1100},

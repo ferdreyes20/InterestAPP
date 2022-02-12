@@ -23,6 +23,7 @@ namespace Interest.Application.Requests.Queries.GetRequesList
                 .Select(r => new GetRequestListModel
                 {
                     Id = r.Id,
+                    Value = r.Value,
                     Computations = r.Computations.Select(c => new GetRequestListModelComputationModel
                     {
                         Id = c.Id,

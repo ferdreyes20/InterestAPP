@@ -8,6 +8,7 @@ namespace Interest.Presentation.Models
     public class RequestViewModel
     {
         public int Id { get; set; }
+        public decimal Value { get; set; }
         public IEnumerable<ComputationViewModel> Computations { get; set; }
 
     }

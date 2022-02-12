@@ -10,5 +10,6 @@ namespace Interest.Presentation.Services
     {
         Task<List<RequestViewModel>> GetRequestList();
         Task<int> AddRequest(decimal value);
+        Task<RequestViewModel> GetRequest(int id);
     }
 }
