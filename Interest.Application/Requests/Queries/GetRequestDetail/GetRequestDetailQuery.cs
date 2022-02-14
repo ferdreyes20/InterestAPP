@@ -10,8 +10,8 @@ namespace Interest.Application.Requests.Queries.GetRequestDetail
 {
     public class GetRequestDetailQuery : IGetRequestDetailQuery
     {
-        private readonly IRepository<Request> _repo;
-        public GetRequestDetailQuery(IRepository<Request> repo)
+        private readonly IRequestRepository _repo;
+        public GetRequestDetailQuery(IRequestRepository repo)
         {
             _repo = repo;
         }

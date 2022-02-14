@@ -11,5 +11,6 @@ namespace Interest.Presentation.Services
         Task<List<RequestViewModel>> GetRequestList();
         Task<int> AddRequest(decimal value);
         Task<RequestViewModel> GetRequest(int id);
+        Task<int> UpdateRequest(RequestViewModel request);
     }
 }

@@ -39,7 +39,7 @@ namespace Interest.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRequest([FromForm]RequestViewModel viewModel)
         {
-            var sample = viewModel;
+            var request = await _requestService.UpdateRequest(viewModel);
             return View();
         }
     }

@@ -11,9 +11,9 @@ namespace Interest.Application.Requests.Queries.GetRequesList
 {
     public class GetRequestListQuery : IGetRequestListQuery
     {
-        private readonly IRepository<Request> _requestRepository;
+        private readonly IRequestRepository _requestRepository;
 
-        public GetRequestListQuery(IRepository<Request> requestRepository)
+        public GetRequestListQuery(IRequestRepository requestRepository)
         {
             _requestRepository = requestRepository;
         }

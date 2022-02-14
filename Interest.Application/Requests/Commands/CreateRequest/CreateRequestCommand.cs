@@ -1,4 +1,5 @@
 ﻿using Interest.Application.Interfaces.Persistence;
+using Interest.Application.Requests.Services;
 using Interest.Domain.Computations;
 using Interest.Domain.Requests;
 using System;
@@ -11,50 +12,23 @@ namespace Interest.Application.Requests.Commands.CreateRequest
 {
     public class CreateRequestCommand : ICreateRequestCommand
     {
-        private readonly IRepository<Request> _repo;
-        public CreateRequestCommand(IRepository<Request> RequestRepository)
+        private readonly IRequestRepository _repo;
+        private readonly IRequestService _service;
+        public CreateRequestCommand(
+            IRequestRepository RequestRepository,
+            IRequestService service
+            )
         {
             _repo = RequestRepository;
+            _service = service;
         }
 
         public int Execute(decimal value)
         {
             try
             {
-                int maturityYears = 4;
-                decimal lowerBoundInterestRate = 0.10M;
-                decimal upperBoundInterestRate = 0.50M;
-                decimal increamentalRate = 0.20M;
-
                 var request = new Request();
-                request.Computations = new List<Computation>();
-
-                decimal currentInterestRate = lowerBoundInterestRate;
-                decimal currentValue = value;
-                int currentYear = 1;
-                for (int i = 0; i < maturityYears; i++)
-                {
-                    var computation = new Computation();
-                    computation.Value = currentValue;
-                    computation.Year = currentYear;
-                    computation.InterestRate = currentInterestRate;
-                    computation.FutureValue = currentValue +
-                        (currentValue * currentInterestRate);
-
-                    request.Computations.Add(computation);
-
-                    currentYear = currentYear + 1;
-                    currentValue = computation.FutureValue;
-                    decimal newRate = currentInterestRate + increamentalRate;
-                    if (newRate > upperBoundInterestRate)
-                    {
-                        currentInterestRate = upperBoundInterestRate;
-                    }
-                    else
-                    {
-                        currentInterestRate = newRate;
-                    }
-                }
+                request.Computations = _service.GetComputationsForValue(value);
 
                 _repo.Add(request);
                 _repo.Save();

@@ -1,14 +1,15 @@
 using Interest.Application.Interfaces.Persistence;
 using Interest.Application.Requests.Commands.CreateRequest;
+using Interest.Application.Requests.Commands.UpdateRequest;
 using Interest.Application.Requests.Queries.GetRequesList;
+using Interest.Application.Requests.Queries.GetRequestComputations;
 using Interest.Application.Requests.Queries.GetRequestDetail;
+using Interest.Application.Requests.Services;
 using Interest.Domain.Computations;
 using Interest.Persistence.Repositories;
 using Interest.Persistence.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +18,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Interest.API
 {
@@ -43,10 +42,17 @@ namespace Interest.API
             });
 
             services.AddTransient<InterestDbContext>();
-            services.AddTransient<IRepository<Domain.Requests.Request>, RequestRepository>();
+            // Repositories
+            services.AddTransient<IRequestRepository, RequestRepository>();
+            // Queries
             services.AddTransient<IGetRequestListQuery, GetRequestListQuery>();
-            services.AddTransient<ICreateRequestCommand, CreateRequestCommand>();
             services.AddTransient<IGetRequestDetailQuery, GetRequestDetailQuery>();
+            services.AddTransient<IGetRequestComputationsQuery, GetRequestComputationsQuery>();
+            // Commands
+            services.AddTransient<ICreateRequestCommand, CreateRequestCommand>();
+            services.AddTransient<IUpdateRequestCommand, UpdateRequestCommand>();
+            // Services
+            services.AddTransient<IRequestService, RequestService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -60,7 +66,7 @@ namespace Interest.API
         public void CreateInitialDatabase()
         {
             using (var context = new InterestDbContext(SqlServerDbContextOptionsExtensions.UseSqlServer(new DbContextOptionsBuilder(), Configuration.GetConnectionString("InterestAPP")).Options))
-            { 
+            {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 

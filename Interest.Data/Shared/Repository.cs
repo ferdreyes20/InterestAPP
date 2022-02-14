@@ -16,9 +16,9 @@ namespace Interest.Persistence.Shared
         {
             context = dbContext;
         }
-        public T Get(int id)
+        public virtual T Get(int id)
         {
-            throw new NotImplementedException();
+            return context.Set<T>().Find(id);
         }
         public void Add(T entity)
         {

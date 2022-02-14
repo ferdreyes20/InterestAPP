@@ -1,14 +1,13 @@
 ﻿using Interest.Application.Interfaces.Persistence;
 using Interest.Application.Requests.Commands.CreateRequest;
+using Interest.Application.Requests.Commands.UpdateRequest;
 using Interest.Application.Requests.Queries.GetRequesList;
+using Interest.Application.Requests.Queries.GetRequestComputations;
 using Interest.Application.Requests.Queries.GetRequestDetail;
-using Microsoft.AspNetCore.Http;
+using Interest.Application.Requests.Services;
+
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Interest.API.Request
 {
@@ -18,17 +17,24 @@ namespace Interest.API.Request
     {
         private readonly IGetRequestDetailQuery _detailQuery;
         private readonly IGetRequestListQuery _listQuery;
+        private readonly IGetRequestComputationsQuery _computationsQuery;
+
         private readonly ICreateRequestCommand _createCommand;
+        private readonly IUpdateRequestCommand _updateCommand;
 
         public RequestController (
             IGetRequestDetailQuery detailQuery,
             IGetRequestListQuery listQuery,
-            ICreateRequestCommand createCommand
+            IGetRequestComputationsQuery computationsQuery,
+            ICreateRequestCommand createCommand,
+            IUpdateRequestCommand updateCommand
         )
         {
-            _listQuery = listQuery;
-            _createCommand = createCommand;
             _detailQuery = detailQuery;
+            _listQuery = listQuery;
+            _computationsQuery = computationsQuery;
+            _createCommand = createCommand;
+            _updateCommand = updateCommand;
         }
 
         [HttpGet("GetRequestList")]
@@ -45,10 +51,24 @@ namespace Interest.API.Request
             return res;
         }
 
-        [HttpPost]
+        [HttpPost("CreateRequest")]
         public int CreateRequest(CreateRequestModel model)
         {
             var requestId = _createCommand.Execute(model.Value);
+            return requestId;
+        }
+
+        [HttpGet("ComputeRequest")]
+        public IEnumerable<GetRequestComputationsModel> ComputeRequest(decimal value)
+        {
+            var requestComputations = _computationsQuery.Execute(value);
+            return requestComputations;
+        }
+
+        [HttpPut("UpdateRequest")]
+        public int UpdateRequest(UpdateRequestModel request)
+        {
+            var requestId = _updateCommand.Execute(request);
             return requestId;
         }
     }

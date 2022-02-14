@@ -30,7 +30,7 @@ namespace Interest.Presentation.Services
                 HttpResponseMessage httpResponse;
                 using (var httpClient = new HttpClient())
                 {
-                    httpResponse = await httpClient.PostAsync(interestUri + "request", data);
+                    httpResponse = await httpClient.PostAsync(interestUri + "request/CreateRequest", data);
                 }
                 var requestId = Convert.ToInt32(await httpResponse.Content.ReadAsStringAsync());
                 return requestId;
@@ -74,6 +74,29 @@ namespace Interest.Presentation.Services
                 var requests = JsonConvert.DeserializeObject<List<RequestViewModel>>(response);
 
                 return requests;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<int> UpdateRequest(RequestViewModel request)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(request);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage httpResponse;
+                using (var httpClient = new HttpClient())
+                {
+                    httpResponse = await httpClient.PutAsync(interestUri + "request/UpdateRequest", data);
+                }
+
+                var response = await httpResponse.Content.ReadAsStringAsync();
+                var requestId = Convert.ToInt32(response);
+
+                return requestId;
             }
             catch (Exception ex)
             {
