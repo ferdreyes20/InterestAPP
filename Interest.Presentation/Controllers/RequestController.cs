@@ -27,11 +27,12 @@ namespace Interest.Presentation.Controllers
         {
             var requestId = await _requestService.AddRequest(value);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ViewRequest", new { id = requestId, isUpdated = true });
         }
 
         public async Task<IActionResult> EditRequest(int id)
         {
+
             var request = await _requestService.GetRequest(id);
             return View(request);
         }
@@ -39,8 +40,24 @@ namespace Interest.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRequest([FromForm]RequestViewModel viewModel)
         {
-            var request = await _requestService.UpdateRequest(viewModel);
-            return View();
+            if(viewModel.IsComputed)
+            {
+                var requestId = await _requestService.UpdateRequest(viewModel);
+                return RedirectToAction("ViewRequest", new { id = requestId, isUpdated = true });
+            }
+
+            var computations = await _requestService.GetRequestComputaions(viewModel.Value);
+            viewModel.Computations = computations;
+
+            viewModel.IsComputed = true;
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> ViewRequest(int id, bool isUpdated = false)
+        {
+            var request = await _requestService.GetRequest(id);
+            request.IsUpdated = isUpdated;
+            return View(request);
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Interest.Application.Requests.Commands.CreateRequest
             try
             {
                 var request = new Request();
+                request.Value = value;
                 request.Computations = _service.GetComputationsForValue(value);
 
                 _repo.Add(request);

@@ -7,6 +7,7 @@
 @foreach (var request in Model)
 {
     <h2>Interest Request: @request.Id</h2>
+    <a href="/Request/EditRequest/@request.Id" class="btn btn-primary">Edit request</a>
     <br />
     <span>Entered value: @request.Value</span>
     <h4>Computations</h4>

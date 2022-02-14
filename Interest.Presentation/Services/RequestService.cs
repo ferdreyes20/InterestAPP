@@ -60,6 +60,25 @@ namespace Interest.Presentation.Services
             }
         }
 
+        public async Task<IEnumerable<ComputationViewModel>> GetRequestComputaions(decimal value)
+        {
+            try
+            {
+                HttpResponseMessage httpResponse;
+                using (var httpClient = new HttpClient())
+                {
+                    httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequestComputations?value=" + value);
+                }
+                var response = await httpResponse.Content.ReadAsStringAsync();
+                var request = JsonConvert.DeserializeObject<IEnumerable<ComputationViewModel>>(response);
+                return request;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<List<RequestViewModel>> GetRequestList()
         {
             try

@@ -7,9 +7,10 @@
 <h1>EDIT REQUEST</h1>
 <hr />
 <h2>Request no: @Model.Id</h2>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditRequest" method="post">
+<form asp-action="EditRequest" method="post">
+    <div class="row">
+        <div class="col-md-4">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Value" class="control-label"></label>
@@ -17,36 +18,45 @@
                 <span asp-validation-for="Value" class="text-danger"></span>
             </div>
             <input name="Id" value="@Model.Id" hidden />
+
+            <input name="IsComputed" value="@Model.IsComputed.ToString()" hidden />
             <div class="form-group">
                 <input type="submit" value="Compute" class="btn btn-secondary w-100" />
             </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<h4>Computations</h4>
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Year</th>
-            <th scope="col">Value</th>
-            <th scope="col">Interest Rate</th>
-            <th scope="col">Future Value</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var computation in Model.Computations)
-        {
+    <h4>Computations</h4>
+    <table class="table">
+        <thead class="thead-dark">
             <tr>
-                <th scope="row">@computation.Year</th>
-                <td>@computation.Value</td>
-                <td>@computation.InterestRate</td>
-                <td>@computation.FutureValue</td>
+                <th scope="col">Year</th>
+                <th scope="col">Value</th>
+                <th scope="col">Interest Rate</th>
+                <th scope="col">Future Value</th>
             </tr>
-        }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @foreach (var computation in Model.Computations)
+            {
+                <tr>
+                    <th scope="row">@computation.Year</th>
+                    <td>@computation.Value</td>
+                    <td>@computation.InterestRate</td>
+                    <td>@computation.FutureValue</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Model.IsComputed)
+    {
+        <input type="submit" value="Save" class="btn btn-primary w-100" />
+    }
+    else
+    {
+        <input type="submit" value="Save" class="btn btn-secondary w-100" disabled/>
+    }
+</form>
 
 <div>
     <a asp-controller="Home" asp-action="Index">Back to List</a>

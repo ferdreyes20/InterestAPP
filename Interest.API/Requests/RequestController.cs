@@ -58,7 +58,7 @@ namespace Interest.API.Request
             return requestId;
         }
 
-        [HttpGet("ComputeRequest")]
+        [HttpGet("GetRequestComputations")]
         public IEnumerable<GetRequestComputationsModel> ComputeRequest(decimal value)
         {
             var requestComputations = _computationsQuery.Execute(value);
