@@ -1,5 +1,6 @@
 using Interest.Application.Interfaces.Persistence;
 using Interest.Application.Requests.Commands.CreateRequest;
+using Interest.Application.Requests.Commands.DeleteRequest;
 using Interest.Application.Requests.Commands.UpdateRequest;
 using Interest.Application.Requests.Queries.GetRequesList;
 using Interest.Application.Requests.Queries.GetRequestComputations;
@@ -51,6 +52,7 @@ namespace Interest.API
             // Commands
             services.AddTransient<ICreateRequestCommand, CreateRequestCommand>();
             services.AddTransient<IUpdateRequestCommand, UpdateRequestCommand>();
+            services.AddTransient<IDeleteRequestCommand, DeleteRequestCommand>();
             // Services
             services.AddTransient<IRequestService, RequestService>();
 

@@ -1,10 +1,9 @@
-﻿using Interest.Application.Interfaces.Persistence;
-using Interest.Application.Requests.Commands.CreateRequest;
+﻿using Interest.Application.Requests.Commands.CreateRequest;
+using Interest.Application.Requests.Commands.DeleteRequest;
 using Interest.Application.Requests.Commands.UpdateRequest;
 using Interest.Application.Requests.Queries.GetRequesList;
 using Interest.Application.Requests.Queries.GetRequestComputations;
 using Interest.Application.Requests.Queries.GetRequestDetail;
-using Interest.Application.Requests.Services;
 
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -21,13 +20,15 @@ namespace Interest.API.Request
 
         private readonly ICreateRequestCommand _createCommand;
         private readonly IUpdateRequestCommand _updateCommand;
+        private readonly IDeleteRequestCommand _deleteCommand;
 
         public RequestController (
             IGetRequestDetailQuery detailQuery,
             IGetRequestListQuery listQuery,
             IGetRequestComputationsQuery computationsQuery,
             ICreateRequestCommand createCommand,
-            IUpdateRequestCommand updateCommand
+            IUpdateRequestCommand updateCommand,
+            IDeleteRequestCommand deleteCommand
         )
         {
             _detailQuery = detailQuery;
@@ -35,6 +36,7 @@ namespace Interest.API.Request
             _computationsQuery = computationsQuery;
             _createCommand = createCommand;
             _updateCommand = updateCommand;
+            _deleteCommand = deleteCommand;
         }
 
         [HttpGet("GetRequestList")]
@@ -69,6 +71,13 @@ namespace Interest.API.Request
         public int UpdateRequest(UpdateRequestModel request)
         {
             var requestId = _updateCommand.Execute(request);
+            return requestId;
+        }
+
+        [HttpDelete("RemoveRequest")]
+        public int RemoveRequest(int id)
+        {
+            var requestId = _deleteCommand.Execute(id);
             return requestId;
         }
     }
