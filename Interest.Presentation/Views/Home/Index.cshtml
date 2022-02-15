@@ -4,10 +4,19 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if (ViewBag.Id > 0 && ViewBag.isDeleted)
+{
+    <div class="alert alert-danger" role="alert">
+        Request @ViewBag.Id has been deleted
+    </div>
+}
+
 @foreach (var request in Model)
 {
     <h2>Interest Request: @request.Id</h2>
     <a href="/Request/EditRequest/@request.Id" class="btn btn-primary">Edit request</a>
+    <br />
+    <a href="/Request/DeleteRequest/@request.Id" class="btn btn-danger">Delete request</a>
     <br />
     <span>Entered value: @request.Value</span>
     <h4>Computations</h4>

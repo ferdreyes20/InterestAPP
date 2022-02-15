@@ -41,6 +41,25 @@ namespace Interest.Presentation.Services
             }
         }
 
+        public async Task<int> DeleteRequest(int id)
+        {
+            try
+            {
+                HttpResponseMessage httpResponse;
+                using (var httpClient = new HttpClient())
+                {
+                    httpResponse = await httpClient.DeleteAsync(interestUri + "request/RemoveRequest?id=" + id);
+                }
+                var response = await httpResponse.Content.ReadAsStringAsync();
+                var requestId = JsonConvert.DeserializeObject<int>(response);
+                return requestId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<RequestViewModel> GetRequest(int id)
         {
             try

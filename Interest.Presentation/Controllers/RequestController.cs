@@ -59,5 +59,11 @@ namespace Interest.Presentation.Controllers
             request.IsUpdated = isUpdated;
             return View(request);
         }
+
+        public async Task<IActionResult> DeleteRequest(int id)
+        {
+            var requestId = await _requestService.DeleteRequest(id);
+            return RedirectToAction("Index", "Home", new { id = 1, isDeleted = true });
+        }
     }
 }

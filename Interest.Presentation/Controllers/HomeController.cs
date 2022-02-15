@@ -21,10 +21,12 @@ namespace Interest.Presentation.Controllers
             _requestService = requestService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id = 0, bool isDeleted = false)
         {
-            var requests = await _requestService.GetRequestList();
+            ViewBag.Id = id;
+            ViewBag.isDeleted = isDeleted;
 
+            var requests = await _requestService.GetRequestList();
             return View(requests.OrderByDescending(r => r.Id));
         }
     }

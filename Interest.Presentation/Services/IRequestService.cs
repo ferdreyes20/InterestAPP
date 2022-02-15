@@ -13,5 +13,6 @@ namespace Interest.Presentation.Services
         Task<RequestViewModel> GetRequest(int id);
         Task<int> UpdateRequest(RequestViewModel request);
         Task<IEnumerable<ComputationViewModel>> GetRequestComputaions(decimal value);
+        Task<int> DeleteRequest(int id);
     }
 }
