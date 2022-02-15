@@ -52,7 +52,7 @@ namespace Interest.Test.Application.Requests.Queries
             };
 
             _mocker = new AutoMoqer();
-            _mocker.GetMock<IRepository<Request>>()
+            _mocker.GetMock<IRequestRepository>()
                 .Setup(c => c.All())
                 .Returns(_requests.AsQueryable());
             _query = _mocker.Create<GetRequestListQuery>();
