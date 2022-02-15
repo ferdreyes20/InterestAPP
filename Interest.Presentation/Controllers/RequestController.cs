@@ -25,45 +25,81 @@ namespace Interest.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRequest(decimal value)
         {
-            var requestId = await _requestService.AddRequest(value);
+            try
+            {
+                var requestId = await _requestService.AddRequest(value);
 
-            return RedirectToAction("ViewRequest", new { id = requestId, isUpdated = true });
+                return RedirectToAction("ViewRequest", new { id = requestId, isUpdated = true });
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         public async Task<IActionResult> EditRequest(int id)
         {
+            try
+            {
+                var request = await _requestService.GetRequest(id);
+                return View(request);
+            }
+            catch (Exception)
+            {
 
-            var request = await _requestService.GetRequest(id);
-            return View(request);
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> EditRequest([FromForm]RequestViewModel viewModel)
         {
-            if(viewModel.IsComputed)
+            try
             {
-                var requestId = await _requestService.UpdateRequest(viewModel);
-                return RedirectToAction("ViewRequest", new { id = requestId, isUpdated = true });
+                if (viewModel.IsComputed)
+                {
+                    var requestId = await _requestService.UpdateRequest(viewModel);
+                    return RedirectToAction("ViewRequest", new { id = requestId, isUpdated = true });
+                }
+
+                var computations = await _requestService.GetRequestComputaions(viewModel.Value);
+                viewModel.Computations = computations;
+
+                viewModel.IsComputed = true;
+                return View(viewModel);
             }
-
-            var computations = await _requestService.GetRequestComputaions(viewModel.Value);
-            viewModel.Computations = computations;
-
-            viewModel.IsComputed = true;
-            return View(viewModel);
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         public async Task<IActionResult> ViewRequest(int id, bool isUpdated = false)
         {
-            var request = await _requestService.GetRequest(id);
-            request.IsUpdated = isUpdated;
-            return View(request);
+            try
+            {
+                var request = await _requestService.GetRequest(id);
+                request.IsUpdated = isUpdated;
+                return View(request);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         public async Task<IActionResult> DeleteRequest(int id)
         {
-            var requestId = await _requestService.DeleteRequest(id);
-            return RedirectToAction("Index", "Home", new { id = 1, isDeleted = true });
+            try
+            {
+                var requestId = await _requestService.DeleteRequest(id);
+                return RedirectToAction("Index", "Home", new { id = 1, isDeleted = true });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
     }
 }

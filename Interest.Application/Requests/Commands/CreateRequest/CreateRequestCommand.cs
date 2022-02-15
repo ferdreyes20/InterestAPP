@@ -25,21 +25,14 @@ namespace Interest.Application.Requests.Commands.CreateRequest
 
         public int Execute(decimal value)
         {
-            try
-            {
-                var request = new Request();
-                request.Value = value;
-                request.Computations = _service.GetComputationsForValue(value);
+            var request = new Request();
+            request.Value = value;
+            request.Computations = _service.GetComputationsForValue(value);
 
-                _repo.Add(request);
-                _repo.Save();
+            _repo.Add(request);
+            _repo.Save();
 
-                return request.Id;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return request.Id;
         }
     }
 }

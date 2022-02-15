@@ -23,123 +23,81 @@ namespace Interest.Presentation.Services
 
         public async Task<int> AddRequest(decimal value)
         {
-            try
+            var json = JsonConvert.SerializeObject(new { Value = value });
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponse;
+            using (var httpClient = new HttpClient())
             {
-                var json = JsonConvert.SerializeObject(new { Value = value });
-                var data = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage httpResponse;
-                using (var httpClient = new HttpClient())
-                {
-                    httpResponse = await httpClient.PostAsync(interestUri + "request/CreateRequest", data);
-                }
-                var requestId = Convert.ToInt32(await httpResponse.Content.ReadAsStringAsync());
-                return requestId;
+                httpResponse = await httpClient.PostAsync(interestUri + "request/CreateRequest", data);
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var requestId = Convert.ToInt32(await httpResponse.Content.ReadAsStringAsync());
+            return requestId;
         }
 
         public async Task<int> DeleteRequest(int id)
         {
-            try
+            HttpResponseMessage httpResponse;
+            using (var httpClient = new HttpClient())
             {
-                HttpResponseMessage httpResponse;
-                using (var httpClient = new HttpClient())
-                {
-                    httpResponse = await httpClient.DeleteAsync(interestUri + "request/RemoveRequest?id=" + id);
-                }
-                var response = await httpResponse.Content.ReadAsStringAsync();
-                var requestId = JsonConvert.DeserializeObject<int>(response);
-                return requestId;
+                httpResponse = await httpClient.DeleteAsync(interestUri + "request/RemoveRequest?id=" + id);
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var response = await httpResponse.Content.ReadAsStringAsync();
+            var requestId = JsonConvert.DeserializeObject<int>(response);
+            return requestId;
         }
 
         public async Task<RequestViewModel> GetRequest(int id)
         {
-            try
+            HttpResponseMessage httpResponse;
+            using (var httpClient = new HttpClient())
             {
-                HttpResponseMessage httpResponse;
-                using (var httpClient = new HttpClient())
-                {
-                    httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequest?id=" + id);
-                }
-                var response = await httpResponse.Content.ReadAsStringAsync();
-                var request = JsonConvert.DeserializeObject<RequestViewModel>(response);
-                return request;
+                httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequest?id=" + id);
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var response = await httpResponse.Content.ReadAsStringAsync();
+            var request = JsonConvert.DeserializeObject<RequestViewModel>(response);
+            return request;
         }
 
         public async Task<IEnumerable<ComputationViewModel>> GetRequestComputaions(decimal value)
         {
-            try
+            HttpResponseMessage httpResponse;
+            using (var httpClient = new HttpClient())
             {
-                HttpResponseMessage httpResponse;
-                using (var httpClient = new HttpClient())
-                {
-                    httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequestComputations?value=" + value);
-                }
-                var response = await httpResponse.Content.ReadAsStringAsync();
-                var request = JsonConvert.DeserializeObject<IEnumerable<ComputationViewModel>>(response);
-                return request;
+                httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequestComputations?value=" + value);
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var response = await httpResponse.Content.ReadAsStringAsync();
+            var request = JsonConvert.DeserializeObject<IEnumerable<ComputationViewModel>>(response);
+            return request;
         }
 
         public async Task<List<RequestViewModel>> GetRequestList()
         {
-            try
+            HttpResponseMessage httpResponse;
+            using (var httpClient = new HttpClient())
             {
-                HttpResponseMessage httpResponse;
-                using (var httpClient = new HttpClient())
-                {
-                    httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequestList");
-                }
-
-                var response = await httpResponse.Content.ReadAsStringAsync();
-                var requests = JsonConvert.DeserializeObject<List<RequestViewModel>>(response);
-
-                return requests;
+                httpResponse = await httpClient.GetAsync(interestUri + "request/GetRequestList");
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
+            var response = await httpResponse.Content.ReadAsStringAsync();
+            var requests = JsonConvert.DeserializeObject<List<RequestViewModel>>(response);
+
+            return requests;
         }
 
         public async Task<int> UpdateRequest(RequestViewModel request)
         {
-            try
+            var json = JsonConvert.SerializeObject(request);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponse;
+            using (var httpClient = new HttpClient())
             {
-                var json = JsonConvert.SerializeObject(request);
-                var data = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage httpResponse;
-                using (var httpClient = new HttpClient())
-                {
-                    httpResponse = await httpClient.PutAsync(interestUri + "request/UpdateRequest", data);
-                }
-
-                var response = await httpResponse.Content.ReadAsStringAsync();
-                var requestId = Convert.ToInt32(response);
-
-                return requestId;
+                httpResponse = await httpClient.PutAsync(interestUri + "request/UpdateRequest", data);
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
+            var response = await httpResponse.Content.ReadAsStringAsync();
+            var requestId = Convert.ToInt32(response);
+
+            return requestId;
         }
     }
 }

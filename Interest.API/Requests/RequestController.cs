@@ -6,6 +6,7 @@ using Interest.Application.Requests.Queries.GetRequestComputations;
 using Interest.Application.Requests.Queries.GetRequestDetail;
 
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace Interest.API.Request
@@ -40,45 +41,87 @@ namespace Interest.API.Request
         }
 
         [HttpGet("GetRequestList")]
-        public IEnumerable<GetRequestListModel> GetRequestList()
+        public ActionResult<IEnumerable<GetRequestListModel>> GetRequestList()
         {
-            var res = _listQuery.Execute();
-            return res;
+            try
+            {
+                var res = _listQuery.Execute();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetRequest")]
-        public GetRequestDetailModel GetRequest(int id)
+        public ActionResult<GetRequestDetailModel> GetRequest(int id)
         {
-            var res = _detailQuery.Execute(id);
-            return res;
+            try
+            {
+                var res = _detailQuery.Execute(id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost("CreateRequest")]
-        public int CreateRequest(CreateRequestModel model)
+        public ActionResult<int> CreateRequest(CreateRequestModel model)
         {
-            var requestId = _createCommand.Execute(model.Value);
-            return requestId;
+            try
+            {
+                var requestId = _createCommand.Execute(model.Value);
+                return Ok(requestId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetRequestComputations")]
-        public IEnumerable<GetRequestComputationsModel> ComputeRequest(decimal value)
+        public ActionResult<IEnumerable<GetRequestComputationsModel>> ComputeRequest(decimal value)
         {
-            var requestComputations = _computationsQuery.Execute(value);
-            return requestComputations;
+            try
+            {
+                var requestComputations = _computationsQuery.Execute(value);
+                return Ok(requestComputations);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("UpdateRequest")]
-        public int UpdateRequest(UpdateRequestModel request)
+        public ActionResult<int> UpdateRequest(UpdateRequestModel request)
         {
-            var requestId = _updateCommand.Execute(request);
-            return requestId;
+            try
+            {
+                var requestId = _updateCommand.Execute(request);
+                return requestId;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("RemoveRequest")]
-        public int RemoveRequest(int id)
+        public ActionResult<int> RemoveRequest(int id)
         {
-            var requestId = _deleteCommand.Execute(id);
-            return requestId;
+            try
+            {
+                var requestId = _deleteCommand.Execute(id);
+                return Ok(requestId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
     }
 }
