@@ -56,6 +56,11 @@ namespace Interest.API
             // Services
             services.AddTransient<IRequestService, RequestService>();
 
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -100,6 +105,8 @@ namespace Interest.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Interest.API v1"));
             }
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseRouting();
 

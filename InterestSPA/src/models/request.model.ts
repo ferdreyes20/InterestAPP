@@ -2,7 +2,7 @@ import { Computation } from "./computation.model";
 
 export class Request {
   id!: number;
-  name!: string;
+  value!: number;
 
   computations!: Computation[];
 }

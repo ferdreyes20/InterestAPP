@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Computation } from '../models/computation.model';
-import { Request } from '../models/request.model'
+import { HttpClient } from '@angular/common/http';
+import { Request } from '../../models/request.model';
 
 @Component({
   selector: 'app-request',
@@ -12,7 +12,7 @@ export class RequestComponent implements OnInit {
   requests: Request[] = [
     {
       id: 1,
-      name: "1",
+      value: 1000,
       computations: [
         {
           id: 1,
@@ -40,15 +40,21 @@ export class RequestComponent implements OnInit {
           year: 4,
           value: 2145,
           interestRate: 0.50,
-          futureValue: 3217.5
+          futureValue: 1234.5
         }
       ]
     }
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    debugger;
+    this.http.get<Request[]>("http://localhost:5000/Request/GetRequestList")
+      .subscribe(
+        (data) => { debugger; this.requests = data; },
+        (error) => { debugger; alert(error); }
+      );
   }
 
 }
