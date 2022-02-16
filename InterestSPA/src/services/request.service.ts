@@ -17,7 +17,7 @@ export class RequestService {
 
   getRequestById(id: number): Observable<Request> {
 
-    return this.httClient.get<Request>(`${environment.interestApi.request.getRequest}?id=${id}`);
+    return this.httClient.get<Request>(environment.interestApi.request.getRequest + `?id=${id}`);
   };
 
   addRequest(value: number): Observable<number> {
@@ -26,5 +26,9 @@ export class RequestService {
 
   updateRequest(request: Request): Observable<number> {
     return this.httClient.put<number>(environment.interestApi.request.updateRequest, request);
+  };
+
+  removeRequest(id: number): Observable<number> {
+    return this.httClient.delete<number>(environment.interestApi.request.removeRequest + `?id=${id}`);
   };
 }

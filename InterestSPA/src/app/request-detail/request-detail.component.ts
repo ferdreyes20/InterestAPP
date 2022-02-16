@@ -35,4 +35,15 @@ export class RequestDetailComponent implements OnInit {
     this.router.navigate([`/request/edit/${requestId}`])
   }
 
+  deleteRequest() {
+    this.service.removeRequest(this.request.id)
+      .subscribe(
+        (data: number) => {
+          this.router.navigate(['/requests']);
+        },
+        (error) => {
+          alert(error)
+        },
+      );
+  }
 }
