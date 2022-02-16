@@ -33,7 +33,7 @@ export class RequestEditComponent implements OnInit {
     this.service.updateRequest(this.request)
       .subscribe(
         (requestId: number) => {
-          this.router.navigate([`/requests/${requestId}`]);
+          this.router.navigate([`/requests/${requestId}`, { status: "1", message: "Request updated successful" }]);
         },
         (error) => {
           alert(error)

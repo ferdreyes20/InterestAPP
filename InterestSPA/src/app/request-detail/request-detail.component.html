@@ -1,10 +1,13 @@
+<app-message [message]="message">
+</app-message>
+
 <h1>View request</h1>
 <br />
-<div>
+<div >
   <h3>Request no. {{request?.id}}</h3>
-  <a [routerLink]="['/requests/edit', request.id]" routerLinkActive="router-link-active"  class="btn btn-primary">View</a>
+  <a [routerLink]="['/requests/edit', request?.id]" routerLinkActive="router-link-active"  class="btn btn-primary">Edit</a>
   <button (click)="deleteRequest()"
-    class="btn btn-danger">
+    class="btn btn-danger m-1">
     Delete
   </button>
   <table class="table">

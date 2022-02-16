@@ -9,6 +9,7 @@ import { RequestDetailComponent } from './request-detail/request-detail.componen
 import { RequestAddComponent } from './request-add/request-add.component';
 import { FormsModule } from '@angular/forms';
 import { RequestEditComponent } from './request-edit/request-edit.component';
+import { MessageComponent } from './common/message/message.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { RequestEditComponent } from './request-edit/request-edit.component';
     RequestComponent,
     RequestDetailComponent,
     RequestAddComponent,
-    RequestEditComponent
+    RequestEditComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

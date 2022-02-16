@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Message } from 'src/models/message.model';
 import { Request } from '../../models/request.model';
 import { RequestService } from '../../services/request.service';
 
@@ -16,9 +17,19 @@ export class RequestDetailComponent implements OnInit {
     private router: Router
   ) { }
 
+  message!: Message;
   request!: Request;
 
   ngOnInit(): void {
+    let messageStatus = this.route.snapshot.paramMap.get("status");
+    let messageText = this.route.snapshot.paramMap.get("message");
+    if(messageStatus  && messageText) {
+      this.message = {
+        status: messageStatus,
+        text: messageText
+      };
+    }
+
     let requestId = Number(this.route.snapshot.paramMap.get("id"));
     this.service.getRequestById(requestId).
       subscribe(
@@ -39,7 +50,7 @@ export class RequestDetailComponent implements OnInit {
     this.service.removeRequest(this.request.id)
       .subscribe(
         (data: number) => {
-          this.router.navigate(['/requests']);
+          this.router.navigate(['/requests', { status: "1", message: "Request deleted successful" }]);
         },
         (error) => {
           alert(error)

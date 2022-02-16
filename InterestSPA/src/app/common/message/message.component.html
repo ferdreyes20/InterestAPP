@@ -1,0 +1,12 @@
+<div *ngIf="message">
+    <div *ngIf="message.status == '1'">
+      <div class="alert alert-success" role="alert">
+          <h4>SUCCESSFUL: {{message.text}}</h4>
+      </div>
+    </div>
+    <div *ngIf="message.status == '0'">
+      <div class="alert alert-danger" role="alert">
+          <h4>ERROR Please try again later</h4>
+      </div>
+    </div>
+  </div>

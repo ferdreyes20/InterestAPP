@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RequestService } from 'src/services/request.service';
 
@@ -23,7 +22,7 @@ export class RequestAddComponent implements OnInit {
     this.service.addRequest(this.value)
       .subscribe(
         (requestId: number) => {
-          this.router.navigate([`/requests/${requestId}`]);
+          this.router.navigate([`/requests/${requestId}`, { status: "1", message: "Request added successful" }]);
         },
         (error) => {
           alert(error)
