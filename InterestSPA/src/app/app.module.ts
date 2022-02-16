@@ -11,13 +11,13 @@ import { RequestDetailComponent } from './request-detail/request-detail.componen
   declarations: [
     AppComponent,
     RequestComponent,
-    RequestDetailComponent
+    RequestDetailComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: 'requests', component: RequestComponent },
+      { path: 'requests', component: RequestComponent},
       { path: 'requests/:id', component: RequestDetailComponent },
       { path: '', redirectTo: 'requests', pathMatch: 'full' },
       { path: '*', redirectTo: 'requests', pathMatch: 'full' }

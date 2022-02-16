@@ -1,1 +1,24 @@
-<p>request-detail works!</p>
+<h1>View request</h1>
+<br />
+<div>
+  <h3>Request no. {{request.id}}</h3>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Year</th>
+        <th scope="col">Value</th>
+        <th scope="col">Interest Rate</th>
+        <th scope="col">Future Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let computation of request.computations">
+        <th scope="row">{{ computation.year }}</th>
+        <td>{{ computation.value }}</td>
+        <td>{{ computation.interestRate }}</td>
+        <td>{{ computation.futureValue }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+</div>
