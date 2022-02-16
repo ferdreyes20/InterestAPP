@@ -1,0 +1,9 @@
+<h1>Add Request</h1>
+<form (submit)="addFormOnSubmit()">
+    <div class="form-group">
+        <label for="value">Value</label>
+        <input [(ngModel)]="value" name="value" type="number" step="0.01" class="form-control" id="value" aria-describedby="valueHelp" placeholder="Enter value">
+        <small id="valueHelp" class="form-text text-muted">please enter a value</small>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>

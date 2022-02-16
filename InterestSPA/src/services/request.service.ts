@@ -19,4 +19,8 @@ export class RequestService {
 
     return this.httClient.get<Request>(`${environment.interestApi.request.getRequest}?id=${id}`);
   };
+
+  addRequest(value: number): Observable<number> {
+    return this.httClient.post<number>(environment.interestApi.request.createRequest, {value : value});
+  };
 }

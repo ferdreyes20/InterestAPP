@@ -1,7 +1,7 @@
 <h1>View request</h1>
 <br />
 <div>
-  <h3>Request no. {{request.id}}</h3>
+  <h3>Request no. {{request?.id}}</h3>
   <table class="table">
     <thead class="table-dark">
       <tr>
@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let computation of request.computations">
+      <tr *ngFor="let computation of request?.computations">
         <th scope="row">{{ computation.year }}</th>
         <td>{{ computation.value }}</td>
         <td>{{ computation.interestRate }}</td>

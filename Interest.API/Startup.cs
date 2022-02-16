@@ -58,7 +58,10 @@ namespace Interest.API
 
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                c.AddPolicy("AllowOrigin", options =>
+                    options.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
             });
 
             services.AddControllers();
@@ -106,7 +109,10 @@ namespace Interest.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Interest.API v1"));
             }
 
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(options =>
+                options.AllowAnyOrigin().
+                AllowAnyMethod().
+                AllowAnyHeader());
 
             app.UseRouting();
 

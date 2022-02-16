@@ -6,18 +6,23 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { RequestComponent } from './request/request.component';
 import { RequestDetailComponent } from './request-detail/request-detail.component';
+import { RequestAddComponent } from './request-add/request-add.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     RequestComponent,
     RequestDetailComponent,
+    RequestAddComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot([
       { path: 'requests', component: RequestComponent},
+      { path: 'requests/add', component: RequestAddComponent },
       { path: 'requests/:id', component: RequestDetailComponent },
       { path: '', redirectTo: 'requests', pathMatch: 'full' },
       { path: '*', redirectTo: 'requests', pathMatch: 'full' }

@@ -18,7 +18,12 @@ export class RequestComponent implements OnInit {
   ngOnInit(): void {
     this.service.getRequestList()
       .subscribe(
-        (data) => { this.requests = data; },
+        (data: Request[]) => { 
+          this.requests = data;
+          this.requests.sort((a, b) => {
+            return a.id > b.id ? -1 : 1; 
+         });
+        },
         (error) => { alert(error); }
       );
   }

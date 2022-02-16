@@ -8,6 +8,7 @@ export const environment = {
     request: {
       getRequestList : "http://localhost:5000/Request/GetRequestList",
       getRequest : "http://localhost:5000/Request/GetRequest",
+      createRequest : "http://localhost:5000/Request/CreateRequest",
     }
   }
 };

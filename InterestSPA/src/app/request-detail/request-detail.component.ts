@@ -18,7 +18,6 @@ export class RequestDetailComponent implements OnInit {
   request!: Request;
 
   ngOnInit(): void {
-    debugger;
     let requestId = Number(this.route.snapshot.paramMap.get("id"));
     this.service.getRequestById(requestId).
       subscribe(
