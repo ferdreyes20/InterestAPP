@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Request } from '../../models/request.model';
 import { RequestService } from '../../services/request.service';
 
@@ -12,7 +12,8 @@ export class RequestDetailComponent implements OnInit {
 
   constructor(
     private service: RequestService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   request!: Request;
@@ -28,6 +29,10 @@ export class RequestDetailComponent implements OnInit {
           alert(error)
         },
       );
+  }
+
+  editRequest(requestId: number) {
+    this.router.navigate([`/request/edit/${requestId}`])
   }
 
 }

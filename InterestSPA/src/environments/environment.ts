@@ -9,6 +9,7 @@ export const environment = {
       getRequestList : "http://localhost:5000/Request/GetRequestList",
       getRequest : "http://localhost:5000/Request/GetRequest",
       createRequest : "http://localhost:5000/Request/CreateRequest",
+      updateRequest: "http://localhost:5000/Request/updateRequest"
     }
   }
 };

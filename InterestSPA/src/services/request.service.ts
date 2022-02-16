@@ -23,4 +23,8 @@ export class RequestService {
   addRequest(value: number): Observable<number> {
     return this.httClient.post<number>(environment.interestApi.request.createRequest, {value : value});
   };
+
+  updateRequest(request: Request): Observable<number> {
+    return this.httClient.put<number>(environment.interestApi.request.updateRequest, request);
+  };
 }

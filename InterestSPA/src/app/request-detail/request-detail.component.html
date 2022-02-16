@@ -2,6 +2,7 @@
 <br />
 <div>
   <h3>Request no. {{request?.id}}</h3>
+  <a [routerLink]="['/requests/edit', request.id]" routerLinkActive="router-link-active"  class="btn btn-primary">View</a>
   <table class="table">
     <thead class="table-dark">
       <tr>
