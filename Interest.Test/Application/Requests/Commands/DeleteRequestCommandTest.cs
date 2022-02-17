@@ -45,10 +45,10 @@ namespace Interest.Test.Application.Requests.Commands
                 var repo = new RequestRepository(dbContext);
                 var service = new RequestService();
                 var deleteCommand = new DeleteRequestCommand(repo);
-                var updatedRequestId = deleteCommand.Execute(requestId);
+                var deletedRequestId = deleteCommand.Execute(requestId);
 
                 // Get deleted request from in-memory database
-                var requestFromRepo = repo.Get(updatedRequestId);
+                var requestFromRepo = repo.Get(deletedRequestId);
 
                 // Assert
                 Assert.That(requestFromRepo, Is.Null);
