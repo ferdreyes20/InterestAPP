@@ -1,4 +1,6 @@
-﻿using Interest.Domain.Requests;
+﻿using Interest.Application.Requests.Commands.CreateRequest;
+using Interest.Application.Requests.Services;
+using Interest.Domain.Requests;
 using Interest.Persistence.Repositories;
 using Interest.Persistence.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -12,42 +14,32 @@ using System.Threading.Tasks;
 namespace Interest.Test.Application.Requests.Commands
 {
     /// <summary>
-    ///     Integration testing - Database
-    ///     Uses In-Memory database
+    ///     Integration testing - Database - CreateRequestCommnadTest
     /// </summary>
     [TestFixture]
     public class CreateRequestCommnadTest
     {
-        private int SeedOneRequest(DbContextOptions<InterestDbContext> options)
-        {
-            using (var dbContext = new InterestDbContext(options))
-            {
-                var request = new Request();
-                dbContext.Requests.Add(request);
-                dbContext.SaveChanges();
-                return request.Id;
-            }
-        }
-
-        /// <summary>
-        ///     CreateRequestCommnad
-        /// </summary>
         [Test]
-        public void TestCreateRequestExecuteReturnRequest()
+        public void TestCreateRequestCommandReturnRequestId()
         {
             // Arrange
+            decimal value = 1000;
             var builder = new DbContextOptionsBuilder<InterestDbContext>();
-            builder.UseInMemoryDatabase("GetSamurai");
-            int requestId = SeedOneRequest(builder.Options);
+            builder.UseInMemoryDatabase("TestCreateRequestCommand");
 
             // Act
             using (var dbContext = new InterestDbContext(builder.Options))
             {
-                var requestRepo = new RequestRepository(dbContext);
-                var requestFromRepo = requestRepo.Get(requestId);
+                var repo = new RequestRepository(dbContext);
+                var service = new RequestService();
+                var createCommand = new CreateRequestCommand(repo, service);
+                var requestIdFromCommand = createCommand.Execute(value);
+
+
                 // Assert
-                Assert.That(requestId, Is.EqualTo(requestFromRepo.Id));
+                Assert.That(requestIdFromCommand, Is.GreaterThan(0));
             }
         }
     }
 }
+
